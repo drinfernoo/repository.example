@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.example" name="Example Repository" version="1.0" provider-name="Example">
+<addon id="ADDON_ID_HERE" name="REPO_NAME_HERE" version="VERSION_NUMBER_HERE" provider-name="YOUR_USERNAME_HERE">
 	<extension point="xbmc.addon.repository" name="Example Repository">
 		<dir>
             <info compressed="false">https://raw.githubusercontent.com/YOUR_USERNAME_HERE/REPOSITORY_NAME_HERE/master/zips/addons.xml</info>
@@ -8,8 +8,8 @@
         </dir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Example Repository</summary>
-		<description>Example of how to set up a Kodi repository, hosted on GitHub pages.</description>
+		<summary>REPO_NAME_HERE</summary>
+		<description>DESCRIPTION OF YOUR REPO HERE</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
