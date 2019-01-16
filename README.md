@@ -1,5 +1,4 @@
-# repository.example
-Example of how to set up a Kodi repository, hosted on GitHub pages.
+# BASIC - How to setup for hosting on GitHub Pages
 
 In order to follow this tutorial, first fork this repository, and then clone your newly forked copy locally.
 
@@ -50,9 +49,9 @@ And if you named it something else, it will be:
 
 `https://YOUR_USERNAME_HERE.github.io/REPOSITORY_NAME_HERE/repo/`
 
-# ADVACNED - How to set up for hosting without GitHub Pages
+# ADVANCED - How to set up for hosting without GitHub Pages
 
-If you want to host your Kodi repo on a different host besides GitHub Pages, follow all of the previous setup steps, except for changing the repository name and setting up GitHub Pages. The only differences will be in your `addon.xml` file (lines 5-7), as it will need to reference yourhost, rather than GitHub:
+If you want to host your Kodi repo on a different host besides GitHub Pages, simply download this repository as a `.zip`, and unzip it , rather than forking and cloning it. Continue to follow the rest of the setup procedure, except for the setting up of GitHub Pages. The only differences will be in your `addon.xml` file (lines 5-7), as it will need to reference yourhost, rather than GitHub:
 
 ```XML
 <info compressed="false">https://YOUR_HOST_URL_HERE/zips/addons.xml</info>
