@@ -37,13 +37,12 @@ Inside the `/repo` folder, edit the link inside `index.html` to reflect your add
 <a href="ADDON_ID_HERE-VERSION_NUMBER_HERE.zip">ADDON_ID_HERE-VERSION_NUMBER_HERE.zip</a>
 ```
 
-After committing and pushing these changes to your repo, go to the "Settings" section for this repository on GitHub. In the first box, labeled "Repository name", you can name this repository whatever you'd like, but it will make a difference in the link you add to Kodi's file manager.
-My suggestion is to name it `YOUR_USERNAME_HERE.github.io`, which will result in your file manager source simply being `https://YOUR_USERNAME_HERE.github.io/repo/`. If you name it something else, it will be `https://YOUR_USERNAME_HERE.github.io/REPOSITORY_NAME_HERE/repo/`.
+After committing and pushing these changes to your repo, go to the "Settings" section for this repository on GitHub. In the first box, labeled "Repository name", change your repository's name. Generally, GitHub Pages repositories are named `YOUR_USERNAME_HERE.github.io`,  but it can be whatever you'd like.
 Next, scroll down to the "GitHub Pages" section, choose the `master` branch as the source, and click "Save".
 
 After that, you should be all done!
 
-Once again, if you named this repository `YOUR_USERNAME_HERE.github.io`, your file manager source will be:
+If you named this repository `YOUR_USERNAME_HERE.github.io`, your file manager source will be:
 
 `https://YOUR_USERNAME_HERE.github.io/repo/`
 
