@@ -50,6 +50,22 @@ And if you named it something else, it will be:
 
 `https://YOUR_USERNAME_HERE.github.io/REPOSITORY_NAME_HERE/repo/`
 
+# ADVACNED - How to set up for hosting without GitHub Pages
+
+If you want to host your Kodi repo on a different host besides GitHub Pages, follow all of the previous setup steps, except for changing the repository name and setting up GitHub Pages. The only differences will be in your `addon.xml` file (lines 5-7), as it will need to reference yourhost, rather than GitHub:
+
+```XML
+<info compressed="false">https://YOUR_HOST_URL_HERE/zips/addons.xml</info>
+<checksum>https://YOUR_HOST_URL_HERE/zips/addons.xml.md5</checksum>
+<datadir zip="true">https://YOUR_HOST_URL_HERE/zips/</datadir>
+```
+
+And upload the contents of this repository to your host. It is **very important** that `YOUR_HOST_URL_HERE` is the URL to *this* folder.
+
+After doing so, your file manager source will be:
+
+`https://YOUR_HOST_URL_HERE/repo/`
+
 
 
 
