@@ -43,10 +43,21 @@ class Generator:
             print "NEW ADD-ON - Creating zip for: %s v.%s" % (addon_id,version)
             zip = zipfile.ZipFile(final_zip, 'w', compression=zipfile.ZIP_DEFLATED )
             root_len = len(os.path.dirname(os.path.abspath(addon_id)))
+            
             for root, dirs, files in os.walk(addon_id):
+                # remove any unneeded git artifacts
+                for i in ['.git', '.github']:
+                    if i in dirs:
+                        try:
+                            dirs.remove(i)
+                        except:
+                            pass
+                
                 archive_root = os.path.abspath(root)[root_len:]
 
                 for f in files:
+                    # one more git removal
+                    if not f.startswith(".git"):
                         fullpath = os.path.join( root, f )
                         archive_name = os.path.join( archive_root, f )
                         zip.write( fullpath, archive_name, zipfile.ZIP_DEFLATED )
@@ -80,7 +91,6 @@ class Generator:
                         print"Compiled python file found but no matching .py file exists:"
                         print compiled
                         print'-----------------------------'
-
 
     def _generate_addons_file(self):
 # addon list
