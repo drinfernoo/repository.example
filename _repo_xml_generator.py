@@ -44,9 +44,11 @@ class Generator:
             zip = zipfile.ZipFile(final_zip, 'w', compression=zipfile.ZIP_DEFLATED )
             root_len = len(os.path.dirname(os.path.abspath(addon_id)))
             
+            ignore = ['.git', '.github', '.gitignore', '.DS_Store', 'thumbs.db']
+            
             for root, dirs, files in os.walk(addon_id):
                 # remove any unneeded git artifacts
-                for i in ['.git', '.github']:
+                for i in ignore:
                     if i in dirs:
                         try:
                             dirs.remove(i)
@@ -57,10 +59,11 @@ class Generator:
 
                 for f in files:
                     # one more git removal
-                    if not f.startswith(".git"):
-                        fullpath = os.path.join( root, f )
-                        archive_name = os.path.join( archive_root, f )
-                        zip.write( fullpath, archive_name, zipfile.ZIP_DEFLATED )
+                    for i in ignore:
+                        if not f.startswith(i):
+                            fullpath = os.path.join( root, f )
+                            archive_name = os.path.join( archive_root, f )
+                            zip.write( fullpath, archive_name, zipfile.ZIP_DEFLATED )
             
             zip.close()
             
@@ -115,7 +118,7 @@ class Generator:
                     if 'version="' in line and not ver_found:
                         version = re.compile('version="(.+?)"').findall(line)[0]
                         ver_found = True
-                    addon_xml += unicode( line.rstrip() + "\n", "utf-8")
+                    addon_xml += line.rstrip() + "\n"
                 addons_xml += addon_xml.rstrip() + "\n\n"
 
                 # Create the zip files                
