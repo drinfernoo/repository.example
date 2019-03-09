@@ -54,16 +54,19 @@ class Generator:
                             dirs.remove(i)
                         except:
                             pass
+                    for f in files:
+                        if f.startswith(i):
+                            try:
+                                files.remove(f)
+                            except:
+                                pass
                 
                 archive_root = os.path.abspath(root)[root_len:]
 
                 for f in files:
-                    # one more git removal
-                    for i in ignore:
-                        if not f.startswith(i):
-                            fullpath = os.path.join( root, f )
-                            archive_name = os.path.join( archive_root, f )
-                            zip.write( fullpath, archive_name, zipfile.ZIP_DEFLATED )
+                    fullpath = os.path.join( root, f )
+                    archive_name = os.path.join( archive_root, f )
+                    zip.write( fullpath, archive_name, zipfile.ZIP_DEFLATED )
             
             zip.close()
             
