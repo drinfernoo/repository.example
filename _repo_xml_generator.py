@@ -44,7 +44,7 @@ class Generator:
             zip = zipfile.ZipFile(final_zip, 'w', compression=zipfile.ZIP_DEFLATED )
             root_len = len(os.path.dirname(os.path.abspath(addon_id)))
             
-            ignore = ['.git', '.github', '.gitignore', '.DS_Store', 'thumbs.db']
+            ignore = ['.git', '.github', '.gitignore', '.DS_Store', 'thumbs.db', '.idea']
             
             for root, dirs, files in os.walk(addon_id):
                 # remove any unneeded git artifacts
