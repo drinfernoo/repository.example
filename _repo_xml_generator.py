@@ -112,7 +112,7 @@ class Generator:
                 if not os.path.isdir(addon) or addon == "zips" or addon.startswith('.'):
                     continue
                 _path = os.path.join(addon, "addon.xml")
-                xml_lines = open(_path, "r").read().splitlines()
+                xml_lines = open(_path, "r", encoding='utf-8').read().splitlines()
                 addon_xml = ""
 
                 # loop thru cleaning each line
@@ -138,7 +138,7 @@ class Generator:
 
     def _generate_md5_file(self):
         try:
-            m = hashlib.md5(open(os.path.join('zips', 'addons.xml'), 'r').read().encode('utf-8')).hexdigest()
+            m = hashlib.md5(open(os.path.join('zips', 'addons.xml'), 'r', encoding='utf-8').read().encode('utf-8')).hexdigest()
             self._save_file(m, file=os.path.join('zips', 'addons.xml.md5'))
         except Exception as e:
             print("An error occurred creating addons.xml.md5 file!\n{0}".format(e))
@@ -146,7 +146,7 @@ class Generator:
     def _save_file(self, data, file, decode=False):
         try:
             if decode:
-                open(file, 'w').write(data.decode('utf-8'))
+                open(file, 'w', encoding='utf-8').write(data.decode('utf-8'))
             else:
                 open(file, 'w').write(data)
         except Exception as e:
