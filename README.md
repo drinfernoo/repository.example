@@ -1,4 +1,4 @@
-Video version of this tutorial now available!
+## Video version of this tutorial now available!
 https://youtu.be/EgFtVW0MRrs
 
 # BASIC - How to setup for hosting on GitHub Pages
