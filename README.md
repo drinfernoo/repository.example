@@ -1,5 +1,5 @@
 ## Video version of this tutorial now available!
-https://youtu.be/EgFtVW0MRrs
+[How to make a Kodi Repository!](https://youtu.be/EgFtVW0MRrs)
 
 # BASIC - How to setup for hosting on GitHub Pages
 
