@@ -122,7 +122,7 @@ class Generator:
 
         copyfiles = ["addon.xml"]
         for ext in root.findall("extension"):
-            if ext.get("point") == "xbmc.addon.metadata":
+            if ext.get("point") in ["xbmc.addon.metadata", "kodi.addon.metadata"]:
                 assets = ext.find("assets")
                 if not assets:
                     continue
