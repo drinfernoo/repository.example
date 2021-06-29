@@ -126,7 +126,7 @@ class Generator:
                 assets = ext.find("assets")
                 if not assets:
                     continue
-                for art in assets:
+                for art in [a for a in assets if a.text]:
                     copyfiles.append(os.path.normpath(art.text))
 
         src_folder = os.path.join(self.release_path, addon_id)
