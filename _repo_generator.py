@@ -10,7 +10,7 @@ import hashlib
 import zipfile
 from xml.etree import ElementTree
 
-SCRIPT_VERSION = 1
+SCRIPT_VERSION = 2
 KODI_VERSIONS = ["krypton", "leia", "matrix", "repo"]
 IGNORE = [
     ".git",
@@ -148,8 +148,12 @@ class Generator:
         """
         Generates a zip for each found addon, and updates the addons.xml file accordingly.
         """
-        addons_xml = ElementTree.parse(addons_xml_path)
-        addons_root = addons_xml.getroot()
+        if not os.path.exists(addons_xml_path):
+            addons_root = ElementTree.Element('root')
+            addons_xml = ElementTree.ElementTree(addons_root)
+        else:
+            addons_xml = ElementTree.parse(addons_xml_path)
+            addons_root = addons_xml.getroot()
 
         folders = [
             i
