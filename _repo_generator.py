@@ -4,13 +4,13 @@
     and then update the md5 and addons.xml file
 """
 
-import re
 import os
 import shutil
 import hashlib
 import zipfile
 from xml.etree import ElementTree
 
+SCRIPT_VERSION = 1
 KODI_VERSIONS = ["krypton", "leia", "matrix", "repo"]
 IGNORE = [
     ".git",
