@@ -23,6 +23,54 @@ IGNORE = [
 ]
 
 
+def _setup_colors():
+    color = os.system("color")
+    console = 0
+    if os.name == 'nt':  # Only if we are running on Windows
+        from ctypes import windll
+
+        k = windll.kernel32
+        console = k.SetConsoleMode(k.GetStdHandle(-11), 7)
+    return color == 1 or console == 1
+
+
+_COLOR_ESCAPE = "\x1b[{}m"
+_COLORS = {
+    "black": "30",
+    "red": "31",
+    "green": "32",
+    "yellow": "33",
+    "blue": "34",
+    "magenta": "35",
+    "cyan": "36",
+    "grey": "37",
+    "endc": "0",
+}
+_SUPPORTS_COLOR = _setup_colors()
+
+
+def color_text(text, color):
+    return (
+        '{}{}{}'.format(
+            _COLOR_ESCAPE.format(_COLORS[color]),
+            text,
+            _COLOR_ESCAPE.format(_COLORS["endc"]),
+        )
+        if _SUPPORTS_COLOR
+        else text
+    )
+
+
+def convert_bytes(num):
+    """
+    this function will convert bytes to MB.... GB... etc
+    """
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if num < 1024.0:
+            return "%3.1f %s" % (num, x)
+        num /= 1024.0
+
+
 class Generator:
     """
     Generates a new addons.xml file from each addons addon.xml file
@@ -42,10 +90,12 @@ class Generator:
         self._remove_binaries()
 
         if self._generate_addons_file(addons_xml_path):
-            print("Successfully updated {}".format(addons_xml_path))
+            print(
+                "Successfully updated {}".format(color_text(addons_xml_path, 'yellow'))
+            )
 
             if self._generate_md5_file(addons_xml_path, md5_path):
-                print("Successfully updated {}".format(md5_path))
+                print("Successfully updated {}".format(color_text(md5_path, 'yellow')))
 
     def _remove_binaries(self):
         """
@@ -58,25 +108,33 @@ class Generator:
                     compiled = os.path.join(parent, fn)
                     try:
                         os.remove(compiled)
-                        print("Removed compiled python file:")
-                        print(compiled)
-                        print("-----------------------------")
+                        print(
+                            "Removed compiled python file: {}".format(
+                                color_text(compiled, 'green')
+                            )
+                        )
                     except:
-                        print("Failed to remove compiled python file:")
-                        print(compiled)
-                        print("-----------------------------")
+                        print(
+                            "Failed to remove compiled python file: {}".format(
+                                color_text(compiled, 'red')
+                            )
+                        )
             for dir in dirnames:
                 if "pycache" in dir.lower():
                     compiled = os.path.join(parent, dir)
                     try:
                         shutil.rmtree(compiled)
-                        print("Removed __pycache__ cache folder:")
-                        print(compiled)
-                        print("-----------------------------")
+                        print(
+                            "Removed __pycache__ cache folder: {}".format(
+                                color_text(compiled, 'green')
+                            )
+                        )
                     except:
-                        print("Failed to remove __pycache__ cache folder:")
-                        print(compiled)
-                        print("-----------------------------")
+                        print(
+                            "Failed to remove __pycache__ cache folder:  {}".format(
+                                color_text(compiled, 'red')
+                            )
+                        )
 
     def _create_zip(self, folder, addon_id, version):
         """
@@ -89,7 +147,6 @@ class Generator:
 
         final_zip = os.path.join(zip_folder, "{0}-{1}.zip".format(addon_id, version))
         if not os.path.exists(final_zip):
-            print("CREATING ZIP FOR: {0} - version={1}".format(addon_id, version))
             zip = zipfile.ZipFile(final_zip, "w", compression=zipfile.ZIP_DEFLATED)
             root_len = len(os.path.dirname(os.path.abspath(addon_folder)))
 
@@ -116,6 +173,14 @@ class Generator:
                     zip.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
 
             zip.close()
+            size = convert_bytes(os.path.getsize(final_zip))
+            print(
+                "Zip created for {} ({}) - {}".format(
+                    color_text(addon_id, 'cyan'),
+                    color_text(version, 'green'),
+                    color_text(size, 'yellow'),
+                )
+            )
 
     def _copy_meta_files(self, addon_id, addon_folder):
         """
@@ -195,7 +260,11 @@ class Generator:
                     self._create_zip(addon, id, version)
                     self._copy_meta_files(addon, os.path.join(self.zips_path, id))
             except Exception as e:
-                print("Excluding {0}: {1}".format(id, e))
+                print(
+                    "Excluding {}: {}".format(
+                        color_text(id, 'yellow'), color_text(e, 'red')
+                    )
+                )
 
         if changed:
             addons_root[:] = sorted(addons_root, key=lambda addon: addon.get('id'))
@@ -206,7 +275,11 @@ class Generator:
 
                 return changed
             except Exception as e:
-                print("An error occurred updating {}!\n{}".format(addons_xml_path, e))
+                print(
+                    "An error occurred updating {}!\n{}".format(
+                        color_text(addons_xml_path, 'yellow'), color_text(e, 'red')
+                    )
+                )
 
     def _generate_md5_file(self, addons_xml_path, md5_path):
         """
@@ -220,7 +293,11 @@ class Generator:
 
             return True
         except Exception as e:
-            print("An error occurred updating {}!\n{}".format(md5_path, e))
+            print(
+                "An error occurred updating {}!\n{}".format(
+                    color_text(md5_path, 'yellow'), color_text(e, 'red')
+                )
+            )
 
     def _save_file(self, data, file):
         """
@@ -229,7 +306,11 @@ class Generator:
         try:
             open(file, "w").write(data)
         except Exception as e:
-            print("An error occurred saving {}!\n{}".format(file, e))
+            print(
+                "An error occurred saving {}!\n{}".format(
+                    color_text(file, 'yellow'), color_text(e, 'red')
+                )
+            )
 
 
 if __name__ == "__main__":
