@@ -137,6 +137,9 @@ class Generator:
         src_folder = os.path.join(self.release_path, addon_id)
         for file in copyfiles:
             addon_path = os.path.join(src_folder, file)
+            if not os.path.exists(addon_path):
+                continue
+
             zips_path = os.path.join(addon_folder, file)
             asset_path = os.path.split(zips_path)[0]
             if not os.path.exists(asset_path):
