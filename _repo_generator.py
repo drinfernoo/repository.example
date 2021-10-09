@@ -38,11 +38,11 @@ _COLOR_ESCAPE = "\x1b[{}m"
 _COLORS = {
     "black": "30",
     "red": "31",
-    "green": "32",
-    "yellow": "33",
+    "green": "4;32",
+    "yellow": "3;33",
     "blue": "34",
     "magenta": "35",
-    "cyan": "36",
+    "cyan": "1;36",
     "grey": "37",
     "endc": "0",
 }
