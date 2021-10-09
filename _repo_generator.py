@@ -78,11 +78,11 @@ class Generator:
                         print(compiled)
                         print("-----------------------------")
 
-    def _create_zip(self, addon_id, version):
+    def _create_zip(self, folder, addon_id, version):
         """
         Creates a zip file in the zips directory for the given addon.
         """
-        addon_folder = os.path.join(self.release_path, addon_id)
+        addon_folder = os.path.join(self.release_path, folder)
         zip_folder = os.path.join(self.zips_path, addon_id)
         if not os.path.exists(zip_folder):
             os.makedirs(zip_folder)
@@ -189,7 +189,7 @@ class Generator:
 
                 if updated:
                     # Create the zip files
-                    self._create_zip(id, version)
+                    self._create_zip(addon, id, version)
                     self._copy_meta_files(addon, os.path.join(self.zips_path, id))
             except Exception as e:
                 print("Excluding {0}: {1}".format(id, e))
