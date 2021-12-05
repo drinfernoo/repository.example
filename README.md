@@ -63,7 +63,7 @@ And for Matrix and up:
 </dir>
 ```
 ---
-After adding your source folders, simply run `_repo_xml_generator.py`. This will create `.zip`s of all of the desired add-ons, and place them in a folder called `zips`, along with the generated `addons.xml` and `addons.xml.md5`.
+After adding your source folders, simply run `_repo_generator.py`. This will create `.zip`s of all of the desired add-ons, and place them in subfolders called `zips`, along with the generated `addons.xml` and `addons.xml.md5`.
 
 ### Make your repository zip installable inside Kodi
 ---
