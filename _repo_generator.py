@@ -52,11 +52,22 @@ def _setup_colors():
         except:
             return False
         else:
-            reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Console")
+            reg_key = winreg.OpenKey(
+                winreg.HKEY_CURRENT_USER, "Console", access=winreg.KEY_ALL_ACCESS
+            )
             try:
                 reg_key_value, _ = winreg.QueryValueEx(reg_key, "VirtualTerminalLevel")
             except FileNotFoundError:
-                return False
+                try:
+                    winreg.SetValueEx(
+                        reg_key, "VirtualTerminalLevel", 0, winreg.KEY_DWORD, 1
+                    )
+                except:
+                    return False
+                else:
+                    reg_key_value, _ = winreg.QueryValueEx(
+                        reg_key, "VirtualTerminalLevel"
+                    )
             else:
                 return reg_key_value == 1
 
