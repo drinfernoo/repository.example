@@ -6,7 +6,7 @@ In order to follow this tutorial, first [use this repository as a template](http
 
 ### Creating your repository add-on
 ---
-First, you'll need to edit the `addon.xml` file within the `/repository.example` folder with your chosen add-on ID, a version number, and your username (or whatever you'd like) for `provider`, as seen on line 2:
+First, you'll need to edit the `addon.xml` file within the `/repo/repository.example` folder with your chosen add-on ID, a version number, and your username (or whatever you'd like) for `provider`, as seen on line 2:
 
 ```XML
 <addon id="ADDON_ID_HERE" name="REPO_NAME_HERE" version="VERSION_NUMBER_HERE" provider-name="YOUR_USERNAME_HERE">
@@ -29,9 +29,9 @@ You should also change the summary and description of your repository, as seen o
 <description>DESCRIPTION OF YOUR REPO HERE</description>
 ```
 
-While not required, it is also recommended to replace `icon.png` and `fanart.jpg` in the `/repository.example` folder with art relevant to your repository or the add-ons contained within. `icon.png` should be 512x512 px, and `fanart.jpg` should be 1920x1080 px, or a similar ratio.
+While not required, it is also recommended to replace `icon.png` and `fanart.jpg` in the `repository.example` folder with art relevant to your repository or the add-ons contained within. `icon.png` should be 512x512 px, and `fanart.jpg` should be 1920x1080 px, or a similar ratio.
 
-Finally, rename the `/repository.example` folder to match whatever add-on ID you chose earlier.
+Finally, rename the `repository.example` folder to match whatever add-on ID you chose earlier.
 
 ### Adding add-ons to your repository
 ---
