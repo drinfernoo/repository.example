@@ -71,15 +71,33 @@ def _setup_colors():
             else:
                 return reg_key_value == 1
 
-    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+    def is_a_tty():
+        return hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 
-    return is_a_tty and any(
+    def legacy_support():
+        color = 0
+        console = 0
+        if sys.platform in ["linux", "linux2"]:
+            color = os.system("color")
+        elif sys.platform == "win32":
+            from ctypes import windll
+
+            k = windll.kernel32
+            console = k.SetConsoleMode(k.GetStdHandle(-11), 7)
+        elif sys.platform == "darwin":
+            pass
+
+        return color == 1 or console == 1
+
+    return any(
         [
+            is_a_tty(),
             sys.platform != "win32",
             "ANSICON" in os.environ,
             "WT_SESSION" in os.environ,
             os.environ.get("TERM_PROGRAM") == "vscode",
-            vt_codes_enabled_in_windows_registry,
+            vt_codes_enabled_in_windows_registry(),
+            legacy_support(),
         ]
     )
 
