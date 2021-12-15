@@ -22,24 +22,6 @@ IGNORE = [
     ".idea",
     "venv",
 ]
-
-
-def _setup_colors():
-    color = 0
-    console = 0
-    if sys.platform in ["linux", "linux2"]:
-        color = os.system("color")
-    elif sys.platform == "win32":  # Only if we are running on Windows
-        from ctypes import windll
-
-        k = windll.kernel32
-        console = k.SetConsoleMode(k.GetStdHandle(-11), 7)
-    elif sys.platform == "darwin":
-    	pass
-
-    return color == 1 or console == 1
-
-
 _COLOR_ESCAPE = "\x1b[{}m"
 _COLORS = {
     "black": "30",
@@ -52,10 +34,52 @@ _COLORS = {
     "grey": "37",
     "endc": "0",
 }
+
+
+def _setup_colors():
+    """
+    Return True if the running system's terminal supports color,
+    and False otherwise.
+    """
+
+    def vt_codes_enabled_in_windows_registry():
+        """
+        Check the Windows registry to see if VT code handling has been enabled by default.
+        """
+        try:
+            import winreg
+        except:
+            return False
+        else:
+            reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Console")
+            try:
+                reg_key_value, _ = winreg.QueryValueEx(reg_key, "VirtualTerminalLevel")
+            except FileNotFoundError:
+                return False
+            else:
+                return reg_key_value == 1
+
+    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+
+    return is_a_tty and any(
+        [
+            sys.platform != "win32",
+            "ANSICON" in os.environ,
+            "WT_SESSION" in os.environ,
+            os.environ.get("TERM_PROGRAM") == "vscode",
+            vt_codes_enabled_in_windows_registry,
+        ]
+    )
+
+
 _SUPPORTS_COLOR = _setup_colors()
 
 
 def color_text(text, color):
+    """
+    Return an ANSI-colored string, if supported.
+    """
+
     return (
         '{}{}{}'.format(
             _COLOR_ESCAPE.format(_COLORS[color]),
