@@ -4,11 +4,12 @@
     and then update the md5 and addons.xml file
 """
 
+import hashlib
 import os
 import shutil
 import sys
-import hashlib
 import zipfile
+
 from xml.etree import ElementTree
 
 SCRIPT_VERSION = 2
