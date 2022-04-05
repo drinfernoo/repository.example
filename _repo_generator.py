@@ -322,7 +322,7 @@ class Generator:
             except Exception as e:
                 print(
                     "Excluding {}: {}".format(
-                        color_text(id, 'yellow'), color_text(e, 'red')
+                        color_text(addon, 'yellow'), color_text(e, 'red')
                     )
                 )
 
