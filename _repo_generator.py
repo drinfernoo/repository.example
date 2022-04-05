@@ -346,10 +346,9 @@ class Generator:
         Generates a new addons.xml.md5 file.
         """
         try:
-            m = hashlib.md5(
-                open(addons_xml_path, "r", encoding="utf-8").read().encode("utf-8")
-            ).hexdigest()
-            self._save_file(m, file=md5_path)
+            with open(addons_xml_path, "r", encoding="utf-8") as f:
+                m = hashlib.md5(f.read().encode("utf-8")).hexdigest()
+                self._save_file(m, file=md5_path)
 
             return True
         except Exception as e:
@@ -364,7 +363,8 @@ class Generator:
         Saves a file.
         """
         try:
-            open(file, "w").write(data)
+            with open(file, "w") as f:
+                f.write(data)
         except Exception as e:
             print(
                 "An error occurred saving {}!\n{}".format(
