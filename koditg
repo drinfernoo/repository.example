@@ -1,0 +1,18 @@
+<addon id="plugin.video.telegram"
+       name="Telegram Plugin"
+       version="1.0.0"
+       provider-name="ErdemTG">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.plugin" library="main.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Telegram video player plugin for KODI</summary>
+        <description>This plugin allows you to play videos from Telegram.</description>
+        <platform>all</platform>
+        <language>en</language>
+        <icon>icon.png</icon>
+    </extension>
+</addon>
